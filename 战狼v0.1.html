@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>UI</title>
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #fd79a8;
+            --text-color: #2d3436;
+            --bg-color: #f8f9f;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-scale: 1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pngLast {
+            width: 90%;
+
+        }
+
+        .phonebutton {
+            background-color: #6c5ce7;
+            color: white;
+            width: 100px;
+            height: 50px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        .goto-button {
+            background-color: #6c5ce7;
+            position: relative;
+            color: white;
+            min-width: 40px;
+            height: 50px;
+            float: left;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        .goto-button:hover {
+            background-color: #a29bfe;
+            color: white;
+            min-width: 40px;
+            height: 50px;
+            float: left;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .phonebutton:hover {
+            background-color: #a29bfe;
+            color: white;
+            width: 100px;
+            height: 50px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        body {
+            font-family: var(--font-family);
+
+            color: var(--text-color);
+            line-height: 1.6;
+
+            font-size: calc(16px * var(--font-scale));
+        }
+
+        .main-container {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            margin: 0;
+            width: 100%;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 24px;
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .say {
+            color: var(--text-color);
+            line-height: 1.6;
+            text-align: justify;
+            opacity: 1;
+            margin: 12px 0;
+            padding: 16px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            font-size: calc(16px * var(--font-scale));
+        }
+
+        .character-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            margin: 16px 0;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .background {
+            z-index: 0;
+        }
+
+        .buy-button {
+            float: right;
+            width: 50px;
+            border: 3px solid #73AD21;
+            padding: 0px;
+
+        }
+
+        .CG {
+            z-index: 1;
+        }
+
+        .frame {
+            z-index: 2;
+        }
+
+        .time {
+            z-index: 3;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .time-message {
+            display: inline-block;
+            background-color: #E8F3FF;
+            border-radius: 18px;
+            padding: 10px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            font-size: calc(14px * var(--font-scale));
+            color: #2980b9;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .chat-container {
+            max-width: 100%;
+            width: 100%;
+            padding: 12px 0;
+            box-sizing: border-box;
+        }
+
+        .displaybutton {
+            display: flex;
+            width: 95%;
+            padding: 0px;
+            gap: 1%;
+        }
+
+        .user-input {
+            display: flex;
+            width: 95%;
+            padding: 0px;
+            gap: 1%;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 1px;
+
+        }
+
+        .chat-window {
+            display: flex;
+            align-items: flex-start;
+            background-color: transparent;
+            border-radius: var(--border-radius);
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+            opacity: 1;
+            border: 2px solid var(--secondary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .message {
+            font-family: inherit;
+            flex: 1;
+            padding: 14px;
+            font-weight: 500;
+            color: var(--text-color);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            line-height: 1.5;
+            font-size: calc(16px * var(--font-scale));
+        }
+
+        .UI4 {
+            z-index: 4;
+            width: calc(50% - 8px);
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            position: relative;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+            float: right;
+        }
+
+        .UI6 {
+            background-color: #EDEDED;
+            width: 95%;
+            height: 20px;
+            z-index: 1;
+            border-radius: 10px;
+            position: relative;
+            top: 50%;
+            text-align: center;
+
+        }
+
+        .UI5 {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            height: 20px;
+            z-index: 2;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(var(--hentai, 50) * 1%);
+        }
+
+        .UI5-1 {
+            background: linear-gradient(90deg, #fd79a8, #e84393);
+            width: calc(var(--love, 50) * 1%);
+        }
+
+        .UI5-2 {
+            background: linear-gradient(90deg, #35ffc2, #3784f7);
+            width: calc(var(--love, 50) * 1%);
+        }
+
+        .UI7 {
+            z-index: 3;
+            width: 50%;
+            position: absolute;
+            top: 30%;
+            left: 45%;
+            border-radius: 10px;
+            margin: 0;
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--text-color);
+            background-color: #EDEDED;
+        }
+
+
+        .illustration {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            margin: 16px 0;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .controls {
+            position: fixed;
+            bottom: calc(50px + 30px * var(--font-scale));
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 500px;
+            z-index: 100;
+            opacity: 0.95;
+            display: none;
+        }
+
+        .controls h2 {
+            margin-bottom: 16px;
+            font-size: calc(20px * var(--font-scale));
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stats-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stats-container {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        #fontSizeSlider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            outline: none;
+            border-radius: 4px;
+            min-width: 150px;
+        }
+
+        #fontSizeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #fontSizeSlider::-webkit-slider-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        #fontSizeValue {
+            font-weight: bold;
+            min-width: 50px;
+            text-align: center;
+            font-size: calc(16px * var(--font-scale));
+        }
+
+        #textsize {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            font-size: calc(16px * var(--font-scale));
+        }
+
+        .testtext {
+            border: 1px solid var(--border-color);
+            background-color: #2d3436;
+            color: white;
+            float: inline-end;
+        }
+
+        .textsize {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            font-size: calc(16px * var(--font-scale));
+        }
+
+        .textsize:hover {
+            background: var(--secondary-color);
+        }
+
+        #textsize:hover {
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .main-container {
+                padding: 20px 16px;
+                border-radius: 12px;
+            }
+
+
+
+            .UI4 {
+                width: 100%;
+            }
+
+            .character-container {
+                aspect-ratio: 3/4;
+            }
+
+            .say {
+                padding: 14px;
+            }
+
+            .message {
+                padding: 12px;
+            }
+
+            .slider-container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            #fontSizeSlider {
+                width: 100%;
+            }
+
+            .controls {
+                width: 95%;
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .avatar {
+                width: 42px;
+                height: 42px;
+            }
+
+            .UI7 {
+                font-size: calc(12px * var(--font-scale));
+            }
+
+            .time-message {
+                font-size: calc(13px * var(--font-scale));
+                padding: 8px 16px;
+            }
+
+            .controls h2 {
+                font-size: calc(18px * var(--font-scale));
+            }
+        }
+
+        .phonePic {
+            width: 100px;
+            height: 100px;
+            border: 5px solid var(--border-color);
+            border-radius: 100%;
+            box-shadow: var(--shadow);
+            display: block;
+            margin: 0 auto;
+            float: left;
+        }
+
+        .phonedisappearbutton {
+            width: 100px;
+            height: 50px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .map {
+            line-height: 0%;
+            width: 460px;
+            height: 460px;
+            background-color: #2d3436;
+        }
+
+        .mapimg {
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            z-Index: 1;
+            position: absolute;
+        }
+
+        #maps {
+            position: absolute;
+            width: 460px;
+            height: 460px;
+        }
+
+        .location {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            z-index: 5;
+        }
+
+        .tooltip {
+            line-height: normal;
+            background-color: white;
+            width: 110px;
+            position: absolute;
+            border: black 1px solid;
+            transform: translateY(-50%);
+            color: var(--tooltip-color);
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: none;
+            z-index: 10;
+        }
+
+        .close-btn {
+            z-index: 50;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #6c5ce7;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #5b4bd8;
+        }
+
+        .close-btn::before,
+        .close-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            border-radius: 1px;
+        }
+
+        .close-btn::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .close-btn::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div id="input" style="display: none;">
+            [[正文]]
+        </div>
+        <div class="time">
+            <p class="time-message"></p>
+        </div>
+        <div class="character-container">
+            <img loading="lazy" src="https://files.catbox.moe/" class="layer background" alt="背景">
+            <img loading="lazy" src="https://files.catbox.moe/" class="layer CG" alt="人体">
+        </div>
+
+        <div id="display"></div>
+        <div class="displaybutton"><button id="textsize">调整字体大小</button>
+            <button class="textsize">状态栏</button>
+            <button class="textsize">功能</button>
+        </div>
+        <div class="user-input">
+            <input type="text" id="user_input" placeholder="请输入对话内容" style="width: 90%;">
+            <button class="phonebutton" id="user_input_button">发送</button>
+        </div>
+        <div class="controls">
+            <h2>调整字体大小</h2>
+            <div class="slider-container">
+                <button class="close-btn"></button>
+                <label for="fontSizeSlider">字体大小：</label>
+                <input type="range" id="fontSizeSlider" min="1" max="32" value="16" step="1">
+                <span id="fontSizeValue">16px</span>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="close-btn"></button>
+            <div id="char-status">
+
+                <!--这里是各个角色的状态栏，全部需要重写，更改为动态增加-->
+            </div>
+
+        </div>
+        <div class="controls">
+            <button class="close-btn"></button>
+            <button id="shopbutton" class="phonebutton">商店</button>
+            <button id="shoprefresh" class="phonebutton">刷新商店</button>
+            <button id="ability" class="phonebutton">能力</button>
+            <button id="bag" class="phonebutton">背包</button>
+            <button id="map" class="phonebutton">地图</button>
+        </div>
+        <!--这是能力的显示区域-->
+        <div class="controls">
+            <div id="ability-bar"></div>
+            <!--这里是能力的显示区域，全部需要重写，更改为动态增加-->
+            <button class="phonebutton phonedisappearbutton">关闭</button>
+        </div>
+        <!--这是好友的显示区域-->
+        <div class="controls">
+
+        </div>
+        <!--这是背包的显示区域-->
+        <div class="controls">
+        </div>
+        <!--这是地图的显示区域-->
+        <div class="controls">
+            <!--此处的地图通过js动态添加-->
+            <div class="map">
+                <div id="maps">
+                    <img loading="lazy" src="https://pic-dbv.pages.dev/M01.png" class="mapimg" alt="地图">
+                </div>
+
+            </div>
+            <div id="MapButton">
+                <!--地图的关闭按钮,事件绑定在phonedisappearbutton这个class上-->
+                <button class="phonebutton phonedisappearbutton">关闭</button>
+            </div>
+
+        </div>
+    </div>
+    <div style="display: none;" id="shopItems">{
+        "1": { "name": "药水", "price": 10 },
+        "2": { "name": "食物", "price": 5 },
+        "3": { "name": "武器", "price": 20 }
+        }</div>
+    <div style="display:none">/[[love]]/[[hentai]]/[[background]]/[[CG]]</div>
+    <script>
+        //初始化声明全部角色变量
+        const abilities = [
+            {
+                id: 1,
+                name: "力量",
+                level: 1
+            },
+            {
+                id: 2,
+                name: "敏捷",
+                level: 1
+            },
+            {
+                id: 3,
+                name: "智力",
+                level: 1
+            },
+            {
+                id: 4,
+                name: "耐力",
+                level: 1
+            },
+            {
+                id: 5,
+                name: "魅力",
+                level: 1
+            }
+        ];
+        const characters = [
+            {
+                id: 1,
+                name: "楠木",
+                love: 0,
+                Sexual_desire: 0,
+                imgrsc: 'https://pic-dbv.pages.dev/NM0001.webp'
+            },
+            {
+                id: 2,
+                name: "向阳",
+                love: 0,
+                Sexual_desire: 0,
+                imgrsc: 'https://pic-dbv.pages.dev/X01.webp'
+            },
+            {
+                id: 3,
+                name: "苍龙",
+                love: 0,
+                Sexual_desire: 0,
+                imgrsc: 'https://pic-dbv.pages.dev/C01.webp'
+            },
+            {
+                id: 4,
+                name: "玲",
+                love: 0,
+                Sexual_desire: 0,
+                imgrsc: 'https://pic-dbv.pages.dev/L01.webp'
+            },
+            {
+                id: 5,
+                name: "姬姒",
+                love: 0,
+                Sexual_desire: 0,
+                imgrsc: 'https://pic-dbv.pages.dev/J01.webp'
+            },
+            {
+                id: 6,
+                name: "露璃",
+                love: 0,
+                Sexual_desire: 0,
+                imgrsc: 'https://pic-dbv.pages.dev/LL01.webp'
+            },
+            {
+                id: 7,
+                name: "紫月",
+                love: 0,
+                Sexual_desire: 0,
+                imgrsc: 'https://pic-dbv.pages.dev/Z01.webp'
+            }
+        ];
+        //声明地图变量，次级地图。
+        const locations = [
+            {
+                id: 1,
+                name: "山水镇",
+                description: "东北领政司府所在地，风景秀丽。",
+                x: 49.9,
+                y: 52.9,
+                printed: false,
+                SubMapUrl: "https://pic-dbv.pages.dev/M02.png",
+                Submaps: [
+                    {
+                        id: 1,
+                        name: "山水镇中心区",
+                        description: "山水镇的商业和行政中心，热闹非凡。",
+                        x: 50,
+                        y: 50,
+                        printed: false
+                    },
+                    {
+                        id: 2,
+                        name: "山水镇郊区",
+                        description: "山水镇的郊外区域，风景优美，适合休闲。",
+                        x: 60,
+                        y: 60,
+                        printed: false
+                    }
+                ]
+            }, {
+                id: 2,
+                name: "滨海市",
+                description: "海岸边的现代化大都市,经济繁荣，文化多元,以旅游业为核心产业。",
+                x: 56.6,
+                y: 58.4,
+                printed: false
+            },
+            {
+                id: 3,
+                name: "千早要塞",
+                description: "从本州岛通往四国岛的海岸要塞，极其雄壮，战略地位重要。",
+                x: 34.6,
+                y: 71.4,
+                printed: false
+            },
+            {
+                id: 4,
+                name: "龙崎",
+                description: "传说当年征夷大将军从此城起兵西征，现为重要的军事工业城市。",
+                x: 55.6,
+                y: 41,
+                printed: false
+            },
+            {
+                id: 5,
+                name: "雾岛",
+                description: "岛上的小镇，与本州岛仅仅隔了一条海峡，以渔业和旅游业为主。",
+                x: 24,
+                y: 77,
+                printed: false
+            }
+
+        ];
+        // 声明原版酒馆say函数
+        async function STsay(prompt) {
+            if (!prompt) return;
+            // 执行命令
+            await STscript(`/sendas name={{user}} ${prompt}||/gen ${prompt}|/sendas name={{char}}`);
+        }
+
+        // 声明设置变量
+        async function setVar(key, value) {
+            try {
+                await STscript(`/setvar key=${key} ${value}`);
+            } catch (error) {
+                console.error('Error setting variable:', error);
+            }
+        }
+        // 声明获取变量
+        async function getVar(key) {
+            try {
+                return await STscript(`/getvar ${key}`);
+            } catch (error) {
+                console.error('Error getting variable:', error);
+                return null;
+            }
+        }
+        //声明say函数
+        async function say(prompt) {
+            if (!prompt) return;
+            // 执行命令
+            await STscript(`/xbgenraw as=system id=1 ${prompt}`);
+            // 开始监控会话1
+            let timer1 = setInterval(() => {
+                const text = window.parent.xiaobaixStreamingGeneration.getLastGeneration(1);
+                console.log(text);
+                return text || '生成中...';
+            }, 300);
+            // 监控会话1的结束
+            window.addEventListener('message', (e) => {
+                if (e.data?.type === 'xiaobaix_streaming_completed') {
+                    const id = e.data.payload.sessionId;
+                    const text = e.data.payload.finalText;
+                    console.log(e.data.payload.sessionId);
+                    console.log(e.data.payload.finalText);
+
+                    if (id === 1) {
+                        clearInterval(timer1);
+                        //打开所有暂时关闭的按钮
+                        shoprefresh.disabled = false;
+                        testtext.disabled = false;
+                    }
+                }
+            });
+        }
+        //声明变量容器
+        var localvars = {};
+
+        // 监听数据变化并刷新界面
+        var textPic = false;
+        var texting = false;
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            // 备用文字替换函数
+            // 获取元素
+            const bdiElement = document.querySelector('bdi[data-xiaobaix-var="正文"]');
+
+            // 获取文本内容（包含HTML实体）
+            let content = bdiElement.textContent;
+            console.log("获取文本为" + content);
+            if (content) {
+                catchAndReplace(content);
+            }
+            console.log('DOMContentLoaded事件触发');
+            //容器变化时也调用
+            const targetNode = document.querySelector('bdi[data-xiaobaix-var="正文"]');
+
+            // 配置观察选项（需要观察哪些变动）
+            const config = { attributes: true, childList: true, subtree: true, characterData: true };
+
+            // 当观察到变动时执行的回调函数
+            const callback = function (mutationsList, observer) {
+                for (let mutation of mutationsList) {
+                    if (mutation.type === 'childList') {
+                        console.log('子节点被添加或移除');
+                    }
+                    else if (mutation.type === 'characterData') {
+                        let content = bdiElement.textContent;
+                        console.log("获取文本为" + content);
+                        if (content) {
+                            catchAndReplace(content);
+                        }
+                        console.log('属性被修改');
+
+                    }
+                }
+            };
+
+            // 创建一个观察器实例并传入回调函数
+            const observer = new MutationObserver(callback);
+
+            // 开始观察目标节点
+            observer.observe(targetNode, config);
+            window.updateTemplateVariables = function (vars) {
+                console.log('获取var中');
+                if (!vars)
+                    return;
+                if (vars) {
+                    console.log('vars:', vars);
+                    console.log('正文', vars.正文);
+                    localvars = { ...localvars, ...vars };
+                    console.log('localvars:', localvars);
+                    //尝试新的复写
+                    console.log('首次进入catchAndReplace');
+                    if (localvars.正文) {
+                        catchAndReplace(localvars.正文);
+                    }
+                    newrefreshpicture();
+                    refreshStatus();
+                    if (localvars.love) {
+                        updateRelationship();
+                    };
+                    if (localvars.ability) {
+                        updateAbility();
+                    }
+                }
+            };
+
+
+
+            //尝试在变量容器中同步变量
+            console.log('updateTemplateVariables函数已定义');
+
+
+
+
+            //尝试向酒馆传输角色关系数据
+            //从localstorage中读取变化
+            async function refreshStatus() {
+                //如果酒馆没有存储
+                if (await getVar('relationshipData') === 'null') {
+                    await setVar('relationshipData', JSON.stringify(characters));
+                    console.log('没有读取到任务数据,初始化存储数据:', characters);
+                }
+                else {
+                    //如果酒馆有存储，尝试读取存储的数据并覆盖本地数据
+                    const storedData = await getVar('relationshipData');
+                    if (storedData) {
+                        console.log('读取到的存储数据:', storedData);
+                        const parsedData = storedData;
+                        for (let i = 0; i < characters.length; i++) {
+                            const storedCharacter = parsedData.find(c => c.id === characters[i].id);
+                            if (storedCharacter) {
+                                characters[i].love = storedCharacter.love;
+                                characters[i].Sexual_desire = storedCharacter.Sexual_desire;
+                            }
+                        }
+                    }
+                }
+                if (await getVar('abilityData') === 'null') {
+                    await setVar('abilityData', JSON.stringify(abilities));
+                    console.log('没有读取到能力数据,初始化存储数据:', abilities);
+                }
+                else {
+                    const storedAbilityData = await getVar('abilityData');
+                    if (storedAbilityData) {
+                        console.log('读取到的存储能力数据:', storedAbilityData);
+                        const parsedAbilityData = storedAbilityData;
+                        for (let i = 0; i < abilities.length; i++) {
+                            const storedAbility = parsedAbilityData.find(c => c.id === abilities[i].id);
+                            if (storedAbility) {
+                                abilities[i].level = storedAbility.level;
+                            }
+                        }
+                    }
+                }
+                refreshStatusBar();
+            }
+            //关系变动函数，尝试将localstorage中的关系变化数据传输到酒馆
+            async function updateRelationship() {
+                settingRelationshipVar = localvars.love;
+                console.log('读取到的关系变化数据:', settingRelationshipVar);
+                totalnumber = settingRelationshipVar.split(',');
+                numberPair = [];
+                // 将好感度和欲望值按角色分组，每组包含角色ID、好感度和欲望值
+                for (let i = 0; i < totalnumber.length; i += 3) {
+                    if (typeof totalnumber[i + 1] !== 'undefined' && typeof totalnumber[i + 2] !== 'undefined') {
+                        numberPair.push([parseInt(totalnumber[i]), parseInt(totalnumber[i + 1]), parseInt(totalnumber[i + 2])]);
+                    }
+                }
+                console.log('分组后的关系数据:', numberPair);
+                await refreshStatus();
+                // 声明关系变动函数
+                async function updatereRelationShipChange(id, love, Sexual_desire) {
+                    console.log(`更新角色ID ${id} 的关系数据: 好感度=${love}, 欲望值=${Sexual_desire}`);
+                    characters[id - 1].love = love;
+                    characters[id - 1].Sexual_desire = Sexual_desire;
+                    await setVar('relationshipData', JSON.stringify(characters));
+                    refreshStatusBar();
+                }
+                // 尝试为分组数据后的每一组调用关系变动函数
+                numberPair.forEach(async (pair) => {
+                    await updatereRelationShipChange(pair[0], pair[1], pair[2]);
+                });
+                // 尝试将更新后的关系数据存储回酒馆
+            }
+            //能力变化函数，尝试将localstorage中的能力变化数据传输到酒馆
+            async function updateAbility() {
+                settingAbilityVar = localvars.ability;
+                console.log('读取到的能力变化数据:', settingAbilityVar);
+                totalnumber = settingAbilityVar.split(',');
+                numberPair = [];
+                // 将能力数据按ID分组，每组包含能力ID和变化
+                for (let i = 0; i < totalnumber.length; i += 2) {
+                    if (typeof totalnumber[i + 1] !== 'undefined') {
+                        numberPair.push([parseInt(totalnumber[i]), parseInt(totalnumber[i + 1])]);
+                    }
+                }
+                console.log('分组后的能力数据:', numberPair);
+                // 声明能力变动函数
+                async function updateAbilityChange(id, number) {
+                    console.log(`更新ID 为${id} 的能力数据: ${number}`);
+                    const ability = abilities.find(c => c.id === id);
+                    if (ability) {
+                        ability.level += number;
+                        await setVar('abilityData', JSON.stringify(abilities));
+                        refreshAbilityBar();
+                    }
+                }
+                // 尝试为分组数据后的每一组调用能力变动函数
+                numberPair.forEach(async (pair) => {
+                    await updateAbilityChange(pair[0], pair[1]);
+                });
+
+            }
+
+            const display = document.getElementById("display");
+
+            var img;
+            const savedFontSize = await getVar('font_size');
+            const fontSizeSlider = document.getElementById('fontSizeSlider');
+            const fontSizeValue = document.getElementById('fontSizeValue');
+
+            if (savedFontSize && savedFontSize !== 'null' && savedFontSize !== 'undefined') {
+                const scale = savedFontSize / 16;
+                document.documentElement.style.setProperty('--font-scale', scale);
+                fontSizeSlider.value = savedFontSize;
+                fontSizeValue.textContent = `${savedFontSize}px`;
+            }
+
+            fontSizeSlider.addEventListener('input', async function () {
+                const fontSize = this.value;
+                const scale = fontSize / 16;
+                document.documentElement.style.setProperty('--font-scale', scale);
+                fontSizeValue.textContent = `${fontSize}px`;
+                await setVar('font_size', fontSize);
+            });
+            // 刷新图片函数
+            //刷新图片函数（新）
+            async function newrefreshpicture() {
+                console.log('使用新刷新图片函数', localvars);
+                let value3 = localvars.background;
+                let value4 = localvars.CG;
+                let value5 = localvars.time;
+                const box7 = [...document.querySelectorAll('.UI7')];
+                const box3 = document.querySelector('.background');
+                const box4 = document.querySelector('.CG');
+                const box5 = document.querySelector('.time-message');
+                if (box3 && value3 !== null) {
+                    value3 = value3.replace(/[\u4e00-\u9fa5]/g, '');
+                    box3.src = "https://files.catbox.moe/" + value3;
+                }
+
+                if (box4 && value4 !== null) {
+                    value4 = value4.replace(/[\u4e00-\u9fa5]/g, '');
+                    box4.src = "https://files.catbox.moe/" + value4;
+                }
+                if (box5 && value5 !== null) {
+                    box5.textContent = value5;
+                }
+            }
+
+
+            function refreshdisplay() {
+                const display = document.getElementById("display");
+                document.body.style.height = '';
+                while (display.firstChild) {
+                    display.removeChild(display.firstChild);
+                }
+                console.log("已清除DOM元素")
+            }
+
+            // 处理对话文本
+            async function catchAndReplace(text) {
+                const Regen1_front = /^([^\<]+)(?=\<)/m;
+                const Regen1_back = /\>([\s\S]+?)(?=\<|$)/g;
+                const Regen2 = /\<[^\>]*?[:：]([^\>]*?)\>/g;
+                const Regen3 = /\<.*?-([\s\S]*?)\>/g;
+                //提供正则接口给ai,让其能在对话时能够让背包中的指定物品变成指定的数量
+                const Regen4 = /\<set-([\s\S]*?)-(\d+)\>/g;
+                //提供正则接口给ai,让其能在对话时删除背包中的指定物品
+                const Regen5 = /\<delete-([\s\S]*?)\>/g;
+                //提供正则接口给ai,让其能够在对话时向背包中增加指定物品
+                const Regen6 = /\<add-([\s\S]*?)-(\d+)\>/g;
+                console.log("进入catchAndReplace，文本为：" + text);
+                let i = 0;
+                const dialogue = [];
+                dialogue.length = 0;
+                await refreshdisplay();
+                let match;
+                Regen1_front.lastIndex = 0;
+                if ((match = Regen1_front.exec(text)) !== null) {
+                    if (match[1]) {
+                        dialogue.push({
+                            text: match[1],
+                            index: match.index,
+                            type: 'type1_front'
+                        });
+                    }
+                }
+
+                Regen1_back.lastIndex = 0;
+                while ((match = Regen1_back.exec(text)) !== null) {
+                    if (match[1]) {
+                        dialogue.push({
+                            text: match[1],
+                            index: match.index,
+                            type: 'type1_back'
+                        });
+                    }
+                }
+
+                Regen2.lastIndex = 0;
+                while ((match = Regen2.exec(text)) !== null) {
+                    dialogue.push({
+                        text: match[1],
+                        index: match.index,
+                        type: 'type2'
+                    });
+                }
+                Regen3.lastIndex = 0;
+                while ((match = Regen3.exec(text)) !== null) {
+                    dialogue.push({
+                        text: match[1],
+                        index: match.index,
+                        type: 'type3'
+                    });
+
+                }
+                Regen4.lastIndex = 0;
+                while ((match = Regen4.exec(text)) !== null) {
+                    dialogue.push({
+                        text: match[1], number: match[2],
+                        index: match.index,
+                        type: 'type4'
+                    });
+                }
+                Regen6.lastIndex = 0;
+                while ((match = Regen6.exec(text)) !== null) {
+                    dialogue.push({
+                        text: match[1], number: match[2],
+                        index: match.index,
+                        type: 'type6'
+                    });
+                }
+
+                dialogue.sort((a, b) => a.index - b.index);
+                console.log("dialogue:", dialogue);
+
+                while (i < dialogue.length) {
+                    if ((dialogue[i].type === 'type1_front' || dialogue[i].type === 'type1_back') && dialogue[i].text.trim() !== '') {
+                        display.insertAdjacentHTML('beforeend', `<p class="say">${dialogue[i].text}</p>`);
+                    } else if (dialogue[i].type === 'type2') {
+
+                        display.insertAdjacentHTML('beforeend', `<div class="chat-container">
+                <div class="chat-window">
+                    <img  loading="lazy" src="https://files.catbox.moe/tkbhft.png" alt="头像" class="avatar">
+                    <div class="message">
+                        ${dialogue[i].text}
+                    </div>
+                </div>
+            </div>`);
+                    } else if (dialogue[i].type === 'type3' && dialogue[i].text.trim() !== '') {
+                        display.insertAdjacentHTML('beforeend', `<img class="pngLast" src="https://files.catbox.moe/${dialogue[i].text}.png" loading="lazy" alt="插图" class="illustration">`);
+                        console.log('插入图片：https://files.catbox.moe/' + dialogue[i].text + '.png');
+                        /*  await setVar('LastImage', dialogue[i].text);
+     
+                          if (!img) {
+                              await setVar('img', dialogue[i].text);
+                          } else {
+     
+                              await setVar('img', imgrepalce(img + "," + dialogue[i].text));
+     
+                          }
+                          img = await getVar('img');*/
+
+
+                    } else if (dialogue[i].type === 'type4')//调用变化物品接口
+                    {
+                        changeitem(dialogue[i].text, dialogue[i].number);
+
+                    } else if (dialogue[i].type === 'type6')//调用增加物品接口
+                    {
+                        additem(dialogue[i].text, dialogue[i].number);
+
+                    }
+
+                    i++;
+                }
+            }
+            //变化物品接口
+            async function changeitem(itemName, itemnumber) {
+                let bagData = await getVar('bag');
+                if (bagData && bagData[itemName] && typeof bagData[itemName].number === 'number') {
+                    bagData[itemName].number = itemnumber;
+                    if (bagData[itemName].number <= 0) {
+                        delete bagData[itemName];
+                    }
+                    await setVar('bag', JSON.stringify(bagData));
+                } else {
+                    console.warn(`物品 ${itemName} 不存在于背包或数量无效`);
+                }
+            }
+            //仿照购买事件的增加物品接口
+            async function additem(itemName, itemnumber) {
+                let bagData = await getVar('bag');
+                if (!bagData) {
+                    bagData = {};
+                }
+                if (bagData[itemName] && typeof bagData[itemName].number === 'number') {
+                    bagData[itemName].number = itemnumber;
+                } else {
+                    bagData[itemName] = { number: itemnumber };
+                }
+                await setVar('bag', JSON.stringify(bagData));
+            }
+
+
+            function imgrepalce(src) {
+                var srcs = Array.from(new Set([...src.split(",")]))
+                return srcs;
+            }
+
+
+
+
+        });
+
+        //获取按钮和显示区域的引用
+        const button1 = document.getElementById("textsize");
+        const button2 = document.getElementsByClassName("textsize")[0];
+        const button3 = document.getElementsByClassName("textsize")[1];
+        //小功能组件按钮
+        const abilityButton = document.getElementById("ability");
+        const shopbutton = document.getElementById("shopbutton");
+        const shoprefresh = document.getElementById("shoprefresh");
+        const mapbutton = document.getElementById("map");
+        //显示区域
+        const displaytextsize = document.getElementsByClassName("controls")[0];
+        const Status_Bar = document.getElementsByClassName("controls")[1];
+        const displayphone = document.getElementsByClassName("controls")[2];
+        const ability_Bar = document.getElementsByClassName("controls")[3];
+        const shop = document.getElementsByClassName("controls")[4];
+        const bagdisplay = document.getElementsByClassName("controls")[5];
+        const map = document.getElementsByClassName("controls")[6];
+        const ability_2_Bar = document.getElementById("ability-bar");
+
+        const testtext = document.getElementsByClassName("testtext")[0];
+        const text = document.getElementsByClassName("text")[0];
+        const bag = document.getElementById("bag");
+        var flag = false;
+        //状态栏第二版
+        async function refreshStatusBar() {
+            statuschar = document.getElementById("char-status");
+            statuschar.replaceChildren();
+            //首先为每个角色创建状态栏UI
+            const statusBarContainer = statuschar.querySelector('div');
+            characters.forEach(character => {
+                const characterStatusBasic = document.createElement('div');
+                const loveScalefill = document.createElement('div');
+                const desireScalefill = document.createElement('div');
+                const nameLabel = document.createElement('h3');
+                nameLabel.textContent = character.name;
+                const img = document.createElement('img');
+                const Scale = document.createElement('div');
+                const lovetext = document.createElement('div');
+                const desiretext = document.createElement('div');
+                characterStatusBasic.style.zIndex = '5';
+                img.style.border = '2px solid black';
+                img.src = character.imgrsc;
+                img.style.width = '40%';
+                img.style.height = '20%';
+                img.style.borderRadius = '10%';
+                Scale.classList.add('UI7');
+                characterStatusBasic.classList.add('UI4');
+                characterStatusBasic.style.width = 'calc(50% - 8px)';
+                loveScalefill.classList.add('UI6');
+                desireScalefill.classList.add('UI6');
+                //从角色数据中获取好感度和欲望值
+                let love = character.love;
+                let desire = character.Sexual_desire;
+                //设置好感度和欲望值的文本
+                lovetext.style.zIndex = '5';
+                desiretext.style.zIndex = '5';
+                lovetext.textContent = '好感度: ' + love;
+                desiretext.textContent = '欲望值: ' + desire;
+                lovetext.style.position = 'absolute';
+                lovetext.style.top = '0px';
+                desiretext.style.position = 'absolute';
+                desiretext.style.top = '20px';
+                //设置好感度和欲望值的进度条宽度
+                loveScalefill.style.width = love + '%';
+                desireScalefill.style.width = desire + '%';
+                //设置好感度和欲望值的进度条颜色
+                loveScalefill.style.background = '#fd79a8';
+                desireScalefill.style.background = '#a29bfe';
+                //将元素添加到状态栏容器中
+                characterStatusBasic.appendChild(nameLabel);
+                characterStatusBasic.appendChild(img);
+                characterStatusBasic.appendChild(Scale);
+                characterStatusBasic.appendChild(Scale);
+                Scale.appendChild(loveScalefill);
+                Scale.appendChild(desireScalefill);
+                Scale.appendChild(lovetext);
+                Scale.appendChild(desiretext);
+                statuschar.appendChild(characterStatusBasic);
+
+
+
+
+            });
+
+        }
+        //发送对话按钮监听
+        async function SendaMessage() {
+            const userInput = document.getElementById("user_input");
+            const userText = userInput.value.trim();
+            if (userText !== "") {
+                // 发送用户输入的对话
+                await STsay(userText);
+                userInput.value = ""; // 清空输入框
+                //锁定按钮直到生成完成
+                this.disabled = true;
+                this.textContent = '等待生成中...';
+                //30s后解锁按钮以防止卡死
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.textContent = '发送';
+                }, 30000);
+            } else {
+                alert("请输入对话内容！");
+            }
+        }
+        document.getElementById("user_input_button").addEventListener("click", function () {
+            SendaMessage();
+        });
+        //监听回车键发送对话
+        document.getElementById("user_input").addEventListener('keydown', function (event) {
+            // 检查是否是回车键（Enter 或 Return）
+            if (event.key === 'Enter') {
+                event.preventDefault(); // 防止默认行为（如提交表单）
+                SendaMessage();;
+            }
+        });
+
+        /*好友对话监听（暂时废弃）
+        testtext.addEventListener("click", async function () {
+            //暂时禁用按钮
+            testtext.disabled = true;
+            const output1 = document.getElementById('output1');
+            output1.textContent = '生成中...';
+            await say(text.value);
+            let timer1 = setInterval(() => {
+                const text = window.parent.xiaobaixStreamingGeneration.getLastGeneration(1);
+                output1.textContent = text || '生成中...';
+            }, 300);
+            console.log("等待回执");
+        });*/
+
+        //小手机按钮
+        button3.addEventListener("click", function () {
+            if (displayphone.style.display !== "block" && !flag) {
+                displayphone.style.display = "block";
+                flag = true;
+            } else if (displayphone.style.display !== "block" && flag) {
+                displaytextsize.style.display = "none";
+                display.style.display = "none";
+                displayphone.style.display = "block";
+            }
+            else {
+                displayphone.style.display = "none";
+                flag = false;
+            }
+        });
+        //字体调整按钮
+        button1.addEventListener("click", function () {
+            if (displaytextsize.style.display !== "block" && !flag) {
+                displaytextsize.style.display = "block";
+                flag = true;
+            } else if (displaytextsize.style.display !== "block" && flag) {
+                display.style.display = "none";
+                displayphone.style.display = "none";
+                displaytextsize.style.display = "block";
+            }
+            else {
+                displaytextsize.style.display = "none";
+                flag = false;
+            }
+        });
+        //状态栏按钮
+        button2.addEventListener("click", function () {
+            if (Status_Bar.style.display !== "block" && !flag) {
+                Status_Bar.style.display = "block";
+                flag = true;
+            } else if (Status_Bar.style.display !== "block" && flag) {
+                displaytextsize.style.display = "none";
+                displayphone.style.display = "none";
+                Status_Bar.style.display = "block";
+            }
+            else {
+                Status_Bar.style.display = "none";
+                flag = false;
+            }
+        });
+        //能力按钮
+        abilityButton.addEventListener("click", function () {
+
+            if (ability_Bar.style.display !== "block") {
+                ability_Bar.style.display = "block";
+                ability_2_Bar.replaceChildren();
+                abilities.forEach(ability => {
+                    const ability_Item = document.createElement('div');
+                    ability_Item.textContent = `${ability.name} - 等级: ${ability.level}`;
+                    ability_2_Bar.appendChild(ability_Item);
+                });
+            } else {
+                ability_Bar.style.display = "none";
+            }
+        });
+        //一级通用关闭按钮 
+        document.querySelectorAll(".close-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                displaytextsize.style.display = "none";
+                Status_Bar.style.display = "none";
+                displayphone.style.display = "none";
+            });
+        });
+        //二级通用关闭按钮
+        document.querySelectorAll(".phonedisappearbutton").forEach(button => {
+            button.addEventListener("click", function () {
+                ability_Bar.style.display = "none";
+                shop.style.display = "none";
+                bagdisplay.style.display = "none";
+                map.style.display = "none";
+                flag = false;
+            });
+        });
+        //地图按钮
+
+
+        //商店按钮
+        shopbutton.addEventListener("click", function () {
+            shop.replaceChildren();
+            const shopItems = JSON.parse(document.getElementById("shopItems").textContent);
+            shop.insertAdjacentHTML('beforeend', `<button id="shopdisappear" class="phonebutton">关闭商店</button>`);
+            document.getElementById("shopdisappear").addEventListener("click", function (e) {
+                shop.style.display = "none";
+            });
+            for (let i = 0; i < Object.keys(shopItems).length; i++) {
+                const key = Object.keys(shopItems)[i];
+                shop.insertAdjacentHTML('beforeend', `<div>${shopItems[key].name} - ${shopItems[key].price}$<button class="buy-button">购买</button></div>`);
+            }
+            if (shop.style.display !== "block") {
+                shop.style.display = "block";
+            } else {
+                shop.style.display = "none";
+            }
+        });
+        //刷新商店按钮
+        shoprefresh.addEventListener("click", async function () {
+            // 禁用刷新按钮
+            shoprefresh.disabled = true;
+            const shopItemsElem = document.getElementById("shopItems");
+            // 清空商店内容
+            shopItemsElem.textContent = "";
+            await say(
+                '请仿照这个格式,生成一段json格式的商店物品信息:\n' +
+                '{\n' +
+                '    "1": { "name": "药水", "price": 10 },\n' +
+                '    "2": { "name": "食物", "price": 5 },\n' +
+                '    "3": { "name": "武器", "price": 20 }\n' +
+                '}'
+            );
+            let timer1 = setInterval(() => {
+                const text = window.parent.xiaobaixStreamingGeneration.getLastGeneration(1);
+                shopItemsElem.textContent = text || '生成中...';
+            }, 300);
+
+        });
+        //第二种背包的开发方案
+
+
+        // 购买按钮事件监听，异步获取和设置变量
+        document.addEventListener('click', async function (e) {
+            if (e.target.classList.contains('buy-button')) {
+                let getbag = await getVar('bag');
+                console.log('执行1' + typeof getbag, getbag);
+                // getVar returns string, so parse it to object
+                if (getbag) {
+                    try {
+                        console.log(typeof getbag, getbag);
+                        console.log('执行成功');
+                    } catch (err) {
+                        getbag = {};
+                        console.error('解析背包数据时出错:', err);
+                    }
+                } else {
+                    getbag = {};
+                    console.log('背包为空，初始化为新对象');
+                }
+                console.log(typeof getbag);
+                console.log(getbag);
+                const itemInfo = e.target.parentElement.textContent;
+                const itemName = itemInfo.split(' - ')[0].trim();
+                if (getbag[itemName]) {
+                    getbag[itemName].number += 1;
+                } else {
+                    getbag[itemName] = { number: 1 };
+                }
+                console.log(typeof getbag, getbag);
+                await setVar('bag', JSON.stringify(getbag));
+                //setvar也应该使用json格式
+                console.log('已购买:', itemName, '背包:', getbag, typeof JSON.stringify(getbag));
+            }
+        });
+        //打开背包按钮
+        bag.addEventListener('click', async function openbag() {
+            let bagData = await getVar('bag');
+            let bagObj = {};
+            console.log('打开背包:', bagData);
+            if (bagData) {
+                try {
+                    //尝试为获取到的每个对象创建一个显示
+
+                    bagdisplay.replaceChildren();
+                    bagObj = bagData;
+                    bagdisplay.insertAdjacentHTML('beforeend', `<button class="phonebutton phonedisappearbutton">关闭</button>`);
+                    document.querySelectorAll(".phonedisappearbutton").forEach(button => {
+                        button.addEventListener("click", function () {
+                            friend.style.display = "none";
+                            shop.style.display = "none";
+                            displayphone.style.display = "none";
+                            displaytextsize.style.display = "none";
+                            display.style.display = "none";
+                            bagdisplay.style.display = "none";
+                            flag = false;
+                        });
+                    });
+                    for (const [name, { number }] of Object.entries(bagObj)) {
+                        const itemDiv = document.createElement("div");
+                        itemDiv.textContent = `${name} x${number}`;
+                        bagdisplay.appendChild(itemDiv);
+                    }
+                    bagdisplay.style.display = "block";
+                    console.log('解析背包数据成功:', bagObj);
+                } catch (err) {
+                    bagObj = {};
+                    console.error('解析背包数据时出错:', err);
+                }
+            } else {
+                bagObj = {};
+                console.log('背包为空，初始化为新对象');
+            }
+        });
+        //map显示
+        mapbutton.addEventListener("click", function () {
+            //地图动态添加
+
+
+            // 更严格的检查，考虑各种可能的"none"值
+            if (map.style.display != "block" || map.style.display == "none") {
+                map.style.display = "block";
+            } else {
+                map.style.display = "none";
+            }
+        });
+        const mapContainer = document.getElementsByClassName('map')[0];
+        mapContainer.style.padding = '0px';
+        mapContainer.style.position = 'relative';
+        //添加地点标记
+        locations.forEach(location => {
+            if (location.printed === false) {
+                location.printed = true;
+                const locationDiv = document.createElement('div');
+                locationDiv.classList.add('location');
+                locationDiv.style.left = location.x + '%';
+                locationDiv.style.top = location.y + '%';
+                locationDiv.style.padding = '0px';
+                const localname = document.createElement('div');
+                localname.textContent = location.name;
+                localname.style.width = 'max-content';
+                localname.style.lineHeight = 'normal';
+                localname.style.color = 'black';
+                localname.style.fontSize = '12px';
+                localname.style.fontFamily = 'Arial, sans-serif';
+                localname.style.position = 'absolute';
+                localname.style.top = '120%';
+                localname.style.transform = 'translateX(-30%)';
+                localname.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                locationDiv.appendChild(localname);
+                //提示框
+                const tooltip = document.createElement('div');
+                tooltip.classList.add('tooltip');
+                const tooltipText = document.createElement('div');
+                tooltipText.classList.add('tooltip-text');
+                tooltip.appendChild(tooltipText);
+                //局部地图
+                const SubMap = document.createElement('button');
+                SubMap.textContent = '局部地图';
+                SubMap.classList.add('goto-button');
+                SubMap.addEventListener('click', async function (ev) {
+                    ev.stopPropagation();
+                    if (location.Submaps) {
+                        const SubMapImg = document.createElement('img');
+                        SubMapImg.src = location.SubMapUrl;
+                        SubMapImg.style.width = '460px';
+                        SubMapImg.style.height = '460px';
+                        SubMapImg.style.position = 'absolute';
+                        //局部地图的层级高于原图,添加在原有地图容器中
+                        SubMapImg.style.zIndex = '10';
+                        //定义一个函数用来关闭局部地图
+                        function closeSubMap() {
+                            SubMapImg.remove();
+                        }
+                        //在局部地图上添加一个关闭按钮
+                        const closeButton = document.createElement('button');
+                        closeButton.textContent = '回到全图';
+                        closeButton.style.position = 'absolute';
+                        closeButton.classList.add('phonebutton');
+                        closeButton.addEventListener('click', function (ev) {
+                            ev.stopPropagation();
+                            closeSubMap();
+                            //清除按钮本身
+                            closeButton.remove();
+                        });
+                        document.getElementById('MapButton').appendChild(closeButton);
+                        document.getElementById('maps').appendChild(SubMapImg);
+
+                    }
+                });
+                //探索按钮
+                const explore = document.createElement('button');
+                explore.textContent = '探索';
+                explore.classList.add('goto-button');
+                explore.addEventListener('click', async function (ev) {
+                    ev.stopPropagation();
+                    //结果判定完全程序化，不经过ai，将探索所得物品返回到背包.
+                    //基本随机函数
+                    const rand = Math.random();
+                    if (rand < 0.1) {
+                        await STsay(`我前往${location.name}进行探索,结果:成功`);
+                    } else if (rand < 0.3 && rand >= 0.1) {
+                        await STsay(`我前往${location.name}进行探索,结果:成功`);
+                    } else if (rand < 0.6 && rand >= 0.3) {
+                        await STsay(`我前往${location.name}进行探索,结果:一般`);
+                    } else if (rand < 0.9 && rand >= 0.6) {
+                        await STsay(`我前往${location.name}进行探索,结果:失败`);
+                    }
+                    map.style.display = "none";
+                });
+                //前往按钮
+
+
+                const goto = document.createElement('button');
+                const gotosay = document.createElement('input');
+                gotosay.type = 'text';
+                gotosay.placeholder = '请输入前往时的对话内容';
+                goto.type = 'submit';
+                goto.textContent = '前往';
+                goto.classList.add('goto-button');
+                gotosay.classList.add('goto-input');
+                gotosay.style.marginBottom = '5px';
+                gotosay.style.width = '90%';
+                goto.addEventListener('click', async function (ev) {
+                    ev.stopPropagation();
+                    if (gotosay.value.trim() === '') {
+                        alert('请输入对话内容后再前往');
+                        return;
+                    }
+                    await STsay(`前往${location.name},{{user}}:${gotosay.value}`);
+                    map.style.display = "none";
+                });
+                //贸易按钮
+                const trade = document.createElement('button');
+                trade.textContent = '贸易(未实现)';
+                trade.classList.add('goto-button');
+                //贸易的实现将完全采用程序化方式，不经过ai，也不发送结果，而是直接进入背包系统.
+                trade.addEventListener('click', async function (ev) {
+                    ev.stopPropagation();
+                    //暂时不写，等待后续完善
+                });
+                tooltip.appendChild(SubMap);
+                tooltip.appendChild(gotosay);
+                tooltip.appendChild(goto);
+                tooltip.appendChild(explore);
+                tooltip.appendChild(trade);
+                mapContainer.appendChild(locationDiv);
+                locationDiv.appendChild(tooltip);
+
+                // 点击定位点时展示提示框并阻止事件冒泡
+                locationDiv.addEventListener('click', function (ev) {
+                    ev.stopPropagation();
+                    // 隐藏其他提示框
+                    document.querySelectorAll('.tooltip').forEach(t => {
+                        if (t !== tooltip) t.style.display = 'none';
+                    });
+                    // 设置提示内容并切换显示
+                    tooltipText.textContent = `${location.name}: ${location.description}`;
+                    tooltip.style.left = '25px';
+                    tooltip.style.top = '0px';
+                    tooltip.style.display = tooltip.style.display === 'block' ? 'block' : 'block';
+                });
+            }
+        });
+
+        // 点击页面其他地方时隐藏所有提示框（只添加一次）
+        document.addEventListener('click', function () {
+            document.querySelectorAll('.tooltip').forEach(t => t.style.display = 'none');
+        });
+
+
+
+        // Define bag outside the event listener for proper scope
+        //背包中只需要放入物品名，同时如果重复则在物品末尾加数量
+        /* const bag = [];
+         //如果酒馆变量不存在则创建
+         document.addEventListener('click', async function (e) {
+             if (e.target.classList.contains('buy-button')) {
+                 const itemInfo = e.target.parentElement.textContent;
+                 const itemName = itemInfo.split(' - ')[0];
+                 let found = false;
+                 for (let i = 0; i < bag.length; i++) {
+                     if (bag[i].startsWith(itemName)) {
+                         let match = bag[i].match(/x(\d+)$/);
+                         let count = match ? parseInt(match[1]) + 1 : 2;
+                         bag[i] = itemName + "x" + count;
+                         found = true;
+                         break;
+                     }
+                 }
+                 if (!found) {
+                     bag.push(itemName);
+                 }
+                 //将本地变量同步至酒馆
+                 tavernbag = await getVar('tavernbag');
+                 if (tavernbag) {//使用getcar从酒馆获取储存的全局变量，将本地变量的值加上酒馆变量的值，如果物品名有重复则数量相加，随后按照使用setvar原有格式再次存入酒馆变量.
+                     for (let i = 0; i < bag.length; i++) {
+                         if(tavernbag)
+                 }
+                 await setVar('tavernbag', bag);
+                 console.log('背包:', bag);
+             }
+         });*/
+    </script>
+</body>
+
+</html>
